@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { boatsAPI, reservationsAPI } from '../services/api'
+import "./AdminPanel.css"
 
 export default function AdminPanel() {
   const [boats, setBoats] = useState([])

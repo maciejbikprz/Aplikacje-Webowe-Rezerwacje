@@ -1,0 +1,256 @@
+/* --- GŁÓWNY KONTENER (NAMESPACE) --- */
+/* Wszystkie style działają tylko wewnątrz klasy .admin-panel */
+.admin-panel
+{
+    overflow-x: scroll;
+}
+.admin-panel .admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+/* Resetowanie stylów nagłówków tylko wewnątrz panelu */
+.admin-panel h1, 
+.admin-panel h2, 
+.admin-panel h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+/* --- ZAKŁADKI (TABS) --- */
+.admin-panel .admin-tabs {
+  display: flex;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 30px;
+}
+
+.admin-panel .tab-btn {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7f8c8d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.admin-panel .tab-btn:hover {
+  color: #007bff;
+  background-color: #f8f9fa;
+}
+
+.admin-panel .tab-btn.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+/* --- TABELE --- */
+.admin-panel .boats-table, 
+.admin-panel .reservations-table {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-top: 20px;
+}
+
+.admin-panel table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.admin-panel th, 
+.admin-panel td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-panel th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-panel tr:hover {
+  background-color: #fafafa;
+}
+
+/* --- FORMULARZE --- */
+.admin-panel .boat-form-container {
+  background: #fdfdfd;
+  padding: 25px;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.admin-panel .form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.admin-panel .form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.admin-panel .form-group label {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Stylowanie inputów tylko wewnątrz panelu */
+.admin-panel .form-group input, 
+.admin-panel .form-group select, 
+.admin-panel .form-group textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%; /* Fix dla szerokości */
+  box-sizing: border-box; /* Fix dla paddingu */
+  transition: border-color 0.2s;
+}
+
+.admin-panel .form-group input:focus, 
+.admin-panel .form-group select:focus, 
+.admin-panel .form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+}
+
+.admin-panel .form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* --- PRZYCISKI --- */
+/* Resetujemy style buttonów tylko wewnątrz panelu */
+.admin-panel button {
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+  font-family: inherit;
+}
+
+.admin-panel button:hover {
+  opacity: 0.9;
+}
+
+.admin-panel .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-panel .btn-add, 
+.admin-panel .btn-save {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+}
+
+.admin-panel .btn-cancel {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+}
+
+.admin-panel .btn-edit {
+  background-color: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 8px;
+  font-size: 0.85rem;
+}
+
+.admin-panel .btn-delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+/* --- STATUSY (BADGES) --- */
+.admin-panel .status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.admin-panel .status-badge.available {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.admin-panel .status-badge.reserved {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.admin-panel .status-badge.maintenance {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.admin-panel .status-badge.confirmed {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.admin-panel .status-badge.pending {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.admin-panel .status-badge.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+    text-decoration: line-through;
+}
+
+/* --- UTILS --- */
+.admin-panel .loading, 
+.admin-panel .no-data, 
+.admin-panel .error-message {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.admin-panel .error-message {
+  color: #dc3545;
+  background: #ffe6e6;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 15px;
+}

@@ -26,11 +26,14 @@ export default function Dashboard() {
   }
 
   const handleCancel = async (reservationId) => {
-    if (!window.confirm('Are you sure you want to cancel this reservation?')) return
+    if (!window.confirm('Czy na pewno chcesz anulować tę rezerwację?')) return
 
     try {
-      await reservationsAPI.delete(reservationId)
-      setReservations(prev => prev.filter(r => r.id !== reservationId))
+      await reservationsAPI.update(reservationId, { status: 'cancelled' })
+
+      setReservations(prev => prev.map(r => 
+        r.id === reservationId ? { ...r, status: 'cancelled' } : r
+      ))
     } catch (err) {
       alert(err.message)
     }
@@ -49,14 +52,31 @@ export default function Dashboard() {
     return Math.ceil(diff / (1000 * 60 * 60 * 24))
   }
 
-  const getStatusConfig = (startDate, endDate) => {
-    const now = new Date()
-    const start = new Date(startDate)
-    const end = new Date(endDate)
+  // ZMIANA KLUCZOWA: Obsługa statusów pending/confirmed
+  const getStatusConfig = (reservation) => {
+    // 1. Jeśli anulowana w bazie
+    if (reservation.status === 'cancelled') {
+        return { label: 'Anulowana', className: 'cancelled' }
+    }
 
-    if (now < start) return { label: 'Nadchodząca', className: 'upcoming' }
-    if (now > end) return { label: 'Zakończona', className: 'completed' }
-    return { label: 'W trakcie', className: 'active' }
+    // 2. Sprawdzamy datę (czy zakończona)
+    const now = new Date()
+    const end = new Date(reservation.endDate)
+    if (now > end) {
+        return { label: 'Zakończona', className: 'completed' }
+    }
+
+    // 3. Statusy aktywne z bazy (pending / confirmed)
+    if (reservation.status === 'pending') {
+        return { label: 'Oczekująca', className: 'pending' } // Np. kolor żółty/pomarańczowy w CSS
+    }
+    
+    if (reservation.status === 'confirmed') {
+        return { label: 'Potwierdzona', className: 'confirmed' } // Np. kolor zielony w CSS
+    }
+
+    // Fallback
+    return { label: 'Inny', className: 'unknown' }
   }
 
   return (
@@ -78,30 +98,30 @@ export default function Dashboard() {
       {!loading && reservations.length > 0 && (
         <div className="boats-list">
           {reservations.map(reservation => {
-            const status = getStatusConfig(reservation.startDate, reservation.endDate)
+            const status = getStatusConfig(reservation)
             const duration = calculateDuration(reservation.startDate, reservation.endDate)
 
+            // Sprawdzamy czy można anulować (tylko pending lub confirmed)
+            const canCancel = status.className === 'pending' || status.className === 'confirmed';
+
             return (
-              <div key={reservation.id} className="reservation-card-container">
+              <div key={reservation.id} className={`reservation-card-container ${reservation.status === 'cancelled' ? 'is-cancelled' : ''}`}>
                 
-                {/* LEWA STRONA: Nazwa i Status */}
                 <div className="res-card-left">
                   <h3>{reservation.boat?.name || 'Boat'}</h3>
+                  {/* Klasa CSS będzie teraz: status-badge pending LUB status-badge confirmed */}
                   <div className={`status-badge ${status.className}`}>
                     {status.label}
                   </div>
                 </div>
 
-                {/* PRAWA STRONA: Daty, Cena, Czas, Przyciski */}
                 <div className="res-card-right">
-                  
                   <div className="res-date-section">
                     <span className="res-date-label">Data rezerwacji:</span>
                     <div className="res-date-box">
                       {formatDate(reservation.startDate)} - {formatDate(reservation.endDate)}
                     </div>
                     
-                    {/* Cena i Czas */}
                     <div className="res-stats-row">
                       <span>⏳ {duration} dni</span>
                       <span>💰 ${reservation.totalPrice}</span>
@@ -112,8 +132,8 @@ export default function Dashboard() {
                     Szczegóły łodzi
                   </button>
 
-                  {/* Przycisk anulowania widoczny tylko dla nadchodzących (lub zawsze - wg uznania) */}
-                  {status.className === 'upcoming' && (
+                  {/* ZMIANA: Przycisk anulowania dostępny dla pending i confirmed */}
+                  {canCancel && (
                     <button 
                       className="res-cancel-strip"
                       onClick={() => handleCancel(reservation.id)}
@@ -121,8 +141,14 @@ export default function Dashboard() {
                       Anuluj rezerwacje
                     </button>
                   )}
-                  {status.className !== 'upcoming' && (
-                     <div className="res-cancel-strip disabled">Rezerwacja zakończona</div>
+                  
+                  {/* Informacja dla anulowanych */}
+                  {status.className === 'cancelled' && (
+                      <div className="res-cancel-strip disabled">Rezerwacja anulowana</div>
+                  )}
+
+                  {status.className === 'completed' && (
+                      <div className="res-cancel-strip disabled">Rezerwacja zakończona</div>
                   )}
                 </div>
               </div>

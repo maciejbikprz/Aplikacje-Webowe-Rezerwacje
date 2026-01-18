@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS reservations (
     startDate DATE NOT NULL,
     endDate DATE NOT NULL,
     totalPrice DECIMAL(10, 2) NOT NULL,
-    status ENUM('pending', 'confirmed', 'cancelled', 'completed') DEFAULT 'pending',
+    status ENUM('pending', 'confirmed') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (boat_id) REFERENCES boats(id) ON DELETE CASCADE
@@ -62,4 +62,4 @@ INSERT INTO boats (name, type, description, capacity, pricePerDay, length, statu
 INSERT INTO reservations (user_id, boat_id, startDate, endDate, totalPrice,
     status) VALUES
     (2, 1, '2024-07-01', '2024-07-05', 600.00, 'confirmed'),
-    (3, 2, '2024-08-10', '2024-08-12', 400.00, 'pending');
+    (2, 2, '2024-08-10', '2024-08-12', 400.00, 'pending');

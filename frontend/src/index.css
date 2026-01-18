@@ -145,6 +145,8 @@ body {
 
 /* --- LAYOUT KONTENERA PRAWEGO --- */
 .boats-page-container {
+  overflow-y: scroll;
+  overflow-x: hidden;
   width: 100%;
   padding: 40px;
   background-color: white;
@@ -363,20 +365,14 @@ body {
   display: inline-block;
 }
 
-.status-badge.upcoming {
-  background-color: rgba(76, 175, 80, 0.2); /* Zielonkawy */
-  color: #a5d6a7;
-}
-
-.status-badge.active {
-  background-color: rgba(33, 150, 243, 0.3); /* Niebieskawy */
+.status-badge.pending {
+  background-color: #f59e0b; /* Pomarańczowy */
   color: white;
-  box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
 }
 
-.status-badge.completed {
-  background-color: rgba(0, 0, 0, 0.3);
-  color: #bdbdbd;
+.status-badge.confirmed {
+  background-color: #10b981; /* Zielony */
+  color: white;
 }
 
 /* PRAWA STRONA (Żółta) */
@@ -458,6 +454,7 @@ body {
   cursor: pointer;
   margin-top: auto;
   transition: 0.2s;
+  padding: 10px 0;
 }
 
 .res-cancel-strip:hover {
