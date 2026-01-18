@@ -41,7 +41,10 @@ function App() {
 
     <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path="/boats" element={<Boats/>}></Route>
+      <Route 
+            path="/boats" 
+            element={<Boats isAuthenticated={isAuthenticated} />}
+        />
       <Route 
         path="/login" 
         element={

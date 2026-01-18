@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import BoatCard from '../Components/BoatCard'
 import { boatsAPI } from '../services/api'
 
+
 export default function Boats({ isAuthenticated }) {
   const [boats, setBoats] = useState([])
   const [loading, setLoading] = useState(true)
