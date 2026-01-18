@@ -16,7 +16,7 @@ function Home() {
                 </p>
             </section>
             <section>
-                <a className="main-homepage__link" href="">SZUKAJ</a>
+                <a className="main-homepage__link" href="/boats">SZUKAJ</a>
             </section>
         </main>
         </div>

@@ -7,6 +7,7 @@ import Login from './Pages/Login';
 import Header from './Components/Header'; // Pamiętaj o imporcie!
 import AdminPanel from './Pages/AdminPanel';
 import Boats from './Pages/Boats';
+import Dashboard from './Pages/Dashboard';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,6 +46,7 @@ function App() {
             path="/boats" 
             element={<Boats isAuthenticated={isAuthenticated} />}
         />
+        <Route path="/dashboard" element={<Dashboard isAuthenticated={isAuthenticated}/>}></Route>
       <Route 
         path="/login" 
         element={

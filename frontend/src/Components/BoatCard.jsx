@@ -48,6 +48,7 @@ export default function BoatCard({ boat, isAuthenticated }) {
           onClose={() => setShowModal(false)}
           onSuccess={() => {
             setShowModal(false)
+            navigate('/dashboard')
           }}
         />
       )}
