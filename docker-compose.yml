@@ -1,4 +1,36 @@
 services:
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'mydatabase'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root_password'
+    ports:
+      - '3306:3306' 
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    restart: always
+    environment:
+      PMA_HOST: mysql_db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - '8080:80'
+    depends_on:
+      - mysql_db
+
   backend:
     build:
       context: ./backend
@@ -6,7 +38,34 @@ services:
     container_name: backend_container
     restart: always
     ports:
-      - '3000:3000'
+      - '3001:3001'
+    environment:
+      DB_HOST: mysql_db
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_DATABASE: mydatabase
+      PORT: 3001
+      JWT_SECRET: your-secret-key-change-in-production
+      
+    volumes:
+      - /usr/src/app/node_modules
+    
+    
+    command: npx nodemon -L server.js
+
+
+    develop:
+      watch:
+        - path: ./backend
+          action: sync
+          target: /usr/src/app
+          ignore:
+            - node_modules/
+
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+
   frontend:
     image: node:20-alpine
     container_name: frontend_dev_container
