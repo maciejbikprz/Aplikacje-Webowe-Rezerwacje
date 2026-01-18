@@ -55,31 +55,31 @@ export default function Register() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Create sailReservations Account</h2>
+        <h2>Stwórz konto</h2>
         
         {error && <div className="error-message">{error}</div>}
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-row">
             <div className="form-group">
-              <label>First Name</label>
+              <label>Imię</label>
               <input
                 type="text"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                placeholder="Enter first name"
+                placeholder="Wprowadź imię"
                 required
               />
             </div>
             <div className="form-group">
-              <label>Last Name</label>
+              <label>Nazwisko</label>
               <input
                 type="text"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                placeholder="Enter last name"
+                placeholder="Wprowadź nazwisko"
                 required
               />
             </div>
@@ -92,42 +92,42 @@ export default function Register() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your email"
+              placeholder="Wprowadź email"
               required
             />
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label>Hasło</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter password"
+              placeholder="Wpisz hasło"
               required
             />
           </div>
 
           <div className="form-group">
-            <label>Confirm Password</label>
+            <label>Potwierdź hasło</label>
             <input
               type="password"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              placeholder="Confirm password"
+              placeholder="Powtórz hasło"
               required
             />
           </div>
 
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Creating Account...' : 'Register'}
+            {loading ? 'Tworzenie konta...' : 'Zarejestruj się'}
           </button>
         </form>
 
         <p className="auth-link">
-          Already have an account? <Link to="/login">Login here</Link>
+          Masz już konto? <Link to="/login">Zaloguj się</Link>
         </p>
       </div>
     </div>

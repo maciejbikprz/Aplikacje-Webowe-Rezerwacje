@@ -466,3 +466,158 @@ body {
   cursor: default;
   font-weight: normal;
 }
+
+
+/* --- AUTHENTICATION PAGES (LOGIN & REGISTER) --- */
+
+/* Main container that centers the form */
+.auth-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #f8f9fa; /* Very light gray to distinguish from white card */
+  padding: 20px;
+}
+
+/* The white card containing the form */
+.auth-card {
+  width: 100%;
+  max-width: 450px; /* Limits width on large screens */
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden; /* Keeps header corners rounded */
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Header of the card (Navy Blue) */
+.auth-card h2 {
+  background-color: rgb(11, 35, 58);
+  color: white;
+  margin: 0;
+  padding: 30px 20px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+/* The form wrapper */
+.auth-form {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form rows (for First/Last name side-by-side) */
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  width: 50%; /* Each input takes equal width */
+}
+
+/* Individual input groups */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgb(18, 30, 48);
+}
+
+.form-group input {
+  padding: 12px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+}
+
+/* Focus state - Yellow glow to match theme */
+.form-group input:focus {
+  outline: none;
+  border-color: #ffc107;
+}
+
+/* Submit Button */
+.submit-btn {
+  margin-top: 10px;
+  padding: 14px;
+  background-color: #ffc107; /* Yellow background */
+  color: rgb(18, 30, 48); /* Navy text */
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.submit-btn:hover {
+  background-color: #ffca2c;
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+  background-color: #e9ecef;
+  color: #adb5bd;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Links (Register/Login switch) */
+.auth-link {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+  color: #6c757d;
+}
+
+.auth-link a {
+  color: #ff9800; /* Orange link */
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+  color: #e65100;
+}
+
+/* Error Message */
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+  padding: 12px;
+  margin: 20px 20px 0 20px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .auth-card {
+    max-width: 100%;
+    box-shadow: none;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

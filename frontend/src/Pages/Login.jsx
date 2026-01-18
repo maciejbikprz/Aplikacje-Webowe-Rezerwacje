@@ -39,7 +39,7 @@ export default function Login({ setIsAuthenticated, setUserRole }) {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Login to sailReservations</h2>
+        <h2>Zaloguj się</h2>
         
         {error && <div className="error-message">{error}</div>}
         
@@ -50,29 +50,29 @@ export default function Login({ setIsAuthenticated, setUserRole }) {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder="Wprowadź email"
               required
             />
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label>Hasło</label>
             <input
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Wprowadź hasło"
               required
             />
           </div>
 
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Ładowanie...' : 'Zaloguj się'}
           </button>
         </form>
 
         <p className="auth-link">
-          Don't have an account? <Link to="/register">Register here</Link>
+          Nie masz konta? <Link to="/register">Zarejestruj się</Link>
         </p>
       </div>
     </div>
