@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './Pages/Home';
-import ExampleAdd from './Pages/ExampleAdd';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
-import Header from './Components/Header'; // Pamiętaj o imporcie!
+import Header from './Components/Header';
 import AdminPanel from './Pages/AdminPanel';
 import Boats from './Pages/Boats';
 import Dashboard from './Pages/Dashboard';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,10 +43,19 @@ function App() {
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route 
-            path="/boats" 
-            element={<Boats isAuthenticated={isAuthenticated} />}
-        />
-        <Route path="/dashboard" element={<Dashboard isAuthenticated={isAuthenticated}/>}></Route>
+          path="/boats" 
+          element={<Boats isAuthenticated={isAuthenticated} />}
+      />
+      
+      <Route 
+        path="/dashboard" 
+        element={
+          <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <Dashboard isAuthenticated={isAuthenticated}/>
+          </ProtectedRoute>
+        }
+      />
+
       <Route 
         path="/login" 
         element={
@@ -58,10 +67,18 @@ function App() {
       />
       
       <Route path="/register" element={<Register/>}/> 
-      {/* <Route path="/ExampleAdd" element={<ExampleAdd/>}/> */}
-      <Route path="/AdminPanel" element={<AdminPanel 
-            setIsAuthenticated={setIsAuthenticated} 
-            setUserRole={setUserRole} />}></Route>
+      
+      <Route 
+        path="/AdminPanel" 
+        element={
+          <ProtectedRoute isAuthenticated={isAuthenticated}>
+            <AdminPanel 
+              setIsAuthenticated={setIsAuthenticated} 
+              setUserRole={setUserRole} 
+            />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   </>)
 }

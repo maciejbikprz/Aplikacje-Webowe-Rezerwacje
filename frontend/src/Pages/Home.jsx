@@ -4,7 +4,9 @@ function Home() {
         <div className="main-center">
 
         <main className="main-homepage">
-            <h1 className="main-homepage-header">Witamy w SailReservations!</h1>
+            <section className="section-title-bar">
+                <h2>Witamy w SailReservations!</h2>
+            </section>
             <section className="main-homepage-section">
                 <h2 className="main-homepage-section__header">Zarezerwuj Idealną Żaglówkę</h2>
                 <p className="main-homepage-section__paragraph">
