@@ -28,7 +28,7 @@ export default function Login({ setIsAuthenticated, setUserRole }) {
 
   return (
     <form onSubmit={sub} style={{ padding: 20 }}>
-      <h3>Login</h3>
+      <h3 className='main-homepage-header'>Login</h3>
       <input name="email" type="email" placeholder="Email" onChange={ch} required /><br/><br/>
       <input name="password" type="password" placeholder="Hasło" onChange={ch} required /><br/><br/>
       <button>Zaloguj</button>

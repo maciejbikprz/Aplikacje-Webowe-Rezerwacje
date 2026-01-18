@@ -20,7 +20,7 @@ export default function Register() {
 
   return (
     <form onSubmit={sub} style={{ padding: 20 }}>
-      <h3>Register</h3>
+      <h3 className='main-homepage-header'>Register</h3>
       <input name="firstName" placeholder="Imię" onChange={ch} required /><br/><br/>
       <input name="lastName" placeholder="Nazwisko" onChange={ch} required /><br/><br/>
       <input name="email" type="email" placeholder="Email" onChange={ch} required /><br/><br/>
