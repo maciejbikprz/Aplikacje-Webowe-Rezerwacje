@@ -36,3 +36,27 @@ CREATE TABLE IF NOT EXISTS reservations (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (boat_id) REFERENCES boats(id) ON DELETE CASCADE
 );
+
+
+-- Tworzenie admina
+INSERT INTO users (firstName, lastName, email, password, role) VALUES
+('admin', 'admin', 'admin@admin', '$2b$10$JCvF23SF0ZC7UwAQJMj.WOHn.NB3EtyTdvmDakF30SOIbXepSU8Ca', 'admin');
+
+-- Tworzenie przykładowego użytkownika
+INSERT INTO users (firstName, lastName, email, password, role) VALUES
+('John', 'Doe', 'john.doe@example.com', '$2b$10$JCvF23SF0ZC7UwAQJMj.WOHn.NB3EtyTdvmDakF30SOIbXepSU8Ca', 'user');
+
+INSERT INTO users (firstName, lastName, email, password, role) VALUES
+('Jane', 'Smith', 'jane.smith@example.com', '$2b$10$JCvF23SF0ZC7UwAQJMj.WOHn.NB3EtyTdvmDakF30SOIbXepSU8Ca', 'user');
+
+-- Tworzenie przykładowych łódek
+INSERT INTO boats (name, type, description, capacity, pricePerDay, length, status
+) VALUES
+('Sea Breeze', 'Sailboat', 'A comfortable sailboat for coastal cruising.', 6, 150.00, 30.5, 'available'),
+('Wave Rider', 'Motorboat', 'A fast motorboat perfect for day trips.', 4, 200.00, 25.0, 'available'),
+('Ocean Explorer', 'Yacht', 'A luxurious yacht for extended voyages.', 10, 500.00, 50.0, 'available');
+-- Tworzenie przykładowych rezerwacji
+INSERT INTO reservations (user_id, boat_id, startDate, endDate, totalPrice,
+    status) VALUES
+    (2, 1, '2024-07-01', '2024-07-05', 600.00, 'confirmed'),
+    (3, 2, '2024-08-10', '2024-08-12', 400.00, 'pending');
