@@ -1,76 +1,91 @@
-body{
+/* --- RESET I GŁÓWNY LAYOUT --- */
+
+body {
+  font-family: Lato;
   box-sizing: border-box;
   margin: 0;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   background-color: rgb(255, 255, 255);
 }
-#root{
-  display: flex;
-  overflow-y: hidden;
-}
-/* Header */
-.document-header{
-  color: white;
+
+#root {
+  display: flex; /* Układ: Sidebar po lewej, reszta po prawej */
   height: 100vh;
-  width: 250px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: rgb(4, 31, 103);
-  box-sizing: border-box;
-  padding: 40px 0px;
-  position:relative;
+  overflow: hidden;
 }
-.brand{
-  font-size: 2em;
+
+/* --- SIDEBAR (LEWY PANEL) --- */
+.document-header {
+  width: 210px; /* Nieco szerszy, żeby pomieścić logo */
+  height: 100vh;
+  background-color: rgb(18, 30, 48); /* Ciemniejszy granat jak na zdjęciu */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  flex-shrink: 0; /* Żeby sidebar się nie zgniatał */
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+/* Logo "SAIL RESERVATION" */
+.brand {
+  margin-bottom: 40px;
+  width: 100%;
   position: relative;
-  margin-bottom: 20px;
-  width: 100%;
+  padding-bottom: 15px;
+  border-bottom: 4px solid white;
 }
-.brand a{
+.brand__reservation{
+  transform: translateY(-14px) translateX(-10px) rotate(-25deg);
+}
+
+.brand a {
+  display: block;
   text-decoration: none;
-  color: white;
+  color: #f0c040; /* Żółty kolor logo */
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+  padding: 10px;
 }
-.brand .admin-text{
+
+/* Napis "Panel administratora" */
+.brand .admin-text {
   font-size: 13px;
+  color: tomato;
   position: absolute;
-  color:tomato;
-  bottom: -30px;
+  bottom: 20px;
+  right: 5px;
+  transform: rotate(-25deg);
+  text-align: center; /* Cofnięcie rotacji dla małego tekstu */
 }
-.document-navigation{
+
+/* Nawigacja */
+.document-navigation {
   width: 100%;
   display: flex;
-  justify-content: space-around;
   flex-direction: column;
   align-items: center;
+  gap: 15px; /* Odstęp między przyciskami */
 }
 .document-navigation__link{
-  color: white;
-  text-align: center;
-  margin: 20px 5px;
-  padding: 5px 10px;
+  color: black;
   text-decoration: none;
-  transition: 100ms;
-  border-bottom: 2px solid transparent;
-}   
-.document-navigation__link:hover{
-  border-bottom: 2px solid rgb(180, 1, 183);
-}
-Footer{
-  position: absolute;
-  bottom: 0;
+  background-color: white;
   padding: 20px;
-}
-.FajnyAdd__item{
-  padding: 5px;
-  position: relative;
-}
-.FajnyAdd__item button{
-  color: white;
-  border: none;
+  transition: 10ms ease;
+  border-radius: 10px;
   cursor: pointer;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  background-color: red;
+  width: 80%;
 }
+.document-navigation a:hover{
+  color: white;
+  background-color: #f0c040;
+}
+.document-footer{
+  color: white;
+}
+
+/*
