@@ -1,0 +1,13 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend_container
+    restart: always
+    ports:
+      - '3000:3000'
+
+
+volumes:
+  db_data: {}
