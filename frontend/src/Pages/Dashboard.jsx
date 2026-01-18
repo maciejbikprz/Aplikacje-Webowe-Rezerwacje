@@ -36,76 +36,100 @@ export default function Dashboard() {
     }
   }
 
-  const getReservationStatus = (startDate, endDate) => {
+  // --- FUNKCJE POMOCNICZE UI ---
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('pl-PL', {
+      day: '2-digit', month: '2-digit', year: 'numeric'
+    })
+  }
+
+  const calculateDuration = (start, end) => {
+    const diff = new Date(end) - new Date(start)
+    return Math.ceil(diff / (1000 * 60 * 60 * 24))
+  }
+
+  const getStatusConfig = (startDate, endDate) => {
     const now = new Date()
     const start = new Date(startDate)
     const end = new Date(endDate)
 
-    if (now < start) return 'Upcoming'
-    if (now > end) return 'Completed'
-    return 'Active'
+    if (now < start) return { label: 'Nadchodząca', className: 'upcoming' }
+    if (now > end) return { label: 'Zakończona', className: 'completed' }
+    return { label: 'W trakcie', className: 'active' }
   }
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-container">
-        <h1>Moje rezerwacje</h1>
-
-        {loading && <div className="loading">Ładowanie rezerwacji...</div>}
-        {error && <div className="error-message">{error}</div>}
-
-        {!loading && reservations.length === 0 && (
-          <div className="no-reservations">
-            <p>Nie masz żadnych rezerwacji.</p>
-            <a href="/boats" className="browse-link">Przeglądaj dostępne łodzie</a>
-          </div>
-        )}
-
-        {!loading && reservations.length > 0 && (
-          <div className="reservations-list">
-            {reservations.map(reservation => (
-              <div key={reservation.id} className="reservation-card">
-                <div className="reservation-header">
-                  <h3>{reservation.boat?.name || 'Boat'}</h3>
-                  <span className={`status ${getReservationStatus(reservation.startDate, reservation.endDate).toLowerCase()}`}>
-                    {getReservationStatus(reservation.startDate, reservation.endDate)}
-                  </span>
-                </div>
-
-                <div className="reservation-details">
-                  <div className="detail-item">
-                    <strong>Check-in:</strong>
-                    <span>{new Date(reservation.startDate).toLocaleDateString()}</span>
-                  </div>
-                  <div className="detail-item">
-                    <strong>Check-out:</strong>
-                    <span>{new Date(reservation.endDate).toLocaleDateString()}</span>
-                  </div>
-                  <div className="detail-item">
-                    <strong>Duration:</strong>
-                    <span>
-                      {Math.ceil((new Date(reservation.endDate) - new Date(reservation.startDate)) / (1000 * 60 * 60 * 24))} days
-                    </span>
-                  </div>
-                  <div className="detail-item">
-                    <strong>Total Price:</strong>
-                    <span className="price">${reservation.totalPrice}</span>
-                  </div>
-                </div>
-
-                {getReservationStatus(reservation.startDate, reservation.endDate) === 'Upcoming' && (
-                  <button 
-                    className="cancel-btn"
-                    onClick={() => handleCancel(reservation.id)}
-                  >
-                    Cancel Reservation
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+    <div className="boats-page-container">
+      <div className="section-title-bar">
+        <h2>Moje rezerwacje</h2>
       </div>
+
+      {loading && <div className="loading">Ładowanie rezerwacji...</div>}
+      {error && <div className="error-message">{error}</div>}
+
+      {!loading && reservations.length === 0 && (
+        <div className="no-reservations">
+          <p>Nie masz żadnych rezerwacji.</p>
+          <a href="/boats" className="browse-link">Przeglądaj dostępne łodzie</a>
+        </div>
+      )}
+
+      {!loading && reservations.length > 0 && (
+        <div className="boats-list">
+          {reservations.map(reservation => {
+            const status = getStatusConfig(reservation.startDate, reservation.endDate)
+            const duration = calculateDuration(reservation.startDate, reservation.endDate)
+
+            return (
+              <div key={reservation.id} className="reservation-card-container">
+                
+                {/* LEWA STRONA: Nazwa i Status */}
+                <div className="res-card-left">
+                  <h3>{reservation.boat?.name || 'Boat'}</h3>
+                  <div className={`status-badge ${status.className}`}>
+                    {status.label}
+                  </div>
+                </div>
+
+                {/* PRAWA STRONA: Daty, Cena, Czas, Przyciski */}
+                <div className="res-card-right">
+                  
+                  <div className="res-date-section">
+                    <span className="res-date-label">Data rezerwacji:</span>
+                    <div className="res-date-box">
+                      {formatDate(reservation.startDate)} - {formatDate(reservation.endDate)}
+                    </div>
+                    
+                    {/* Cena i Czas */}
+                    <div className="res-stats-row">
+                      <span>⏳ {duration} dni</span>
+                      <span>💰 ${reservation.totalPrice}</span>
+                    </div>
+                  </div>
+
+                  <button className="res-details-btn">
+                    Szczegóły łodzi
+                  </button>
+
+                  {/* Przycisk anulowania widoczny tylko dla nadchodzących (lub zawsze - wg uznania) */}
+                  {status.className === 'upcoming' && (
+                    <button 
+                      className="res-cancel-strip"
+                      onClick={() => handleCancel(reservation.id)}
+                    >
+                      Anuluj rezerwacje
+                    </button>
+                  )}
+                  {status.className !== 'upcoming' && (
+                     <div className="res-cancel-strip disabled">Rezerwacja zakończona</div>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
