@@ -6,6 +6,7 @@ import Register from './Pages/Register';
 import Login from './Pages/Login';
 import Header from './Components/Header'; // Pamiętaj o imporcie!
 import AdminPanel from './Pages/AdminPanel';
+import Boats from './Pages/Boats';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -13,7 +14,6 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Przy odświeżeniu pobierz token ORAZ rolę
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('userRole');
     if (token) {
@@ -33,7 +33,6 @@ function App() {
   };
 
   return(<>
-    {/* Przekazujemy stan i funkcję wylogowania do Header */}
     <Header 
         isAuthenticated={isAuthenticated} 
         userRole={userRole} 
@@ -42,7 +41,7 @@ function App() {
 
     <Routes>
       <Route path="/" element={<Home/>}/>
-      
+      <Route path="/boats" element={<Boats/>}></Route>
       <Route 
         path="/login" 
         element={
