@@ -16,32 +16,29 @@ export default function BoatCard({ boat, isAuthenticated }) {
 
   return (
     <>
-      <div className="boat-card">
-        <div className="boat-image">
-          {boat.image && <img src={boat.image} alt={boat.name} />}
-          {!boat.image && <div className="no-image">⛵</div>}
-          <span className={`status-badge ${boat.status}`}>
-            {boat.status === 'available' ? '✓ Available' : 'Reserved'}
-          </span>
-        </div>
-        <div className="boat-details">
+      <div className="boat-card-container">
+        {/* Lewa sekcja - Nazwa */}
+        <div className="card-left">
           <h3>{boat.name}</h3>
-          <p className="boat-type">{boat.type}</p>
-          <div className="boat-info">
-            <span><strong>Capacity:</strong> {boat.capacity} people</span>
-            <span><strong>Price:</strong> ${boat.pricePerDay}/day</span>
-            {boat.length && <span><strong>Length:</strong> {boat.length}m</span>}
+          <p className="boat-type-small">{boat.type}</p>
+        </div>
+
+        {/* Prawa sekcja - Akcje */}
+        <div className="card-right">
+          <div className="card-main-action">
+            <button 
+              className="reserve-btn"
+              onClick={handleReserve}
+            >
+              Zarezerwuj
+            </button>
           </div>
-          <p className="boat-description">{boat.description}</p>
-          <button 
-            className={`reserve-btn ${boat.status === 'available' ? '' : 'disabled'}`}
-            onClick={handleReserve}
-            disabled={boat.status !== 'available' && isAuthenticated}
-          >
-            {boat.status === 'available' ? 'Reserve Now' : 'Not Available'}
-          </button>
+          <div className="card-details-strip">
+            Szczegóły
+          </div>
         </div>
       </div>
+
       {showModal && (
         <ReservationModal 
           boat={boat} 
@@ -55,4 +52,3 @@ export default function BoatCard({ boat, isAuthenticated }) {
     </>
   )
 }
-

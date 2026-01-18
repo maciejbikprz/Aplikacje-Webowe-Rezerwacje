@@ -140,3 +140,182 @@ body {
   border-radius: 5px;
 
 }
+
+
+
+/* --- LAYOUT KONTENERA PRAWEGO --- */
+.boats-page-container {
+  width: 100%;
+  padding: 40px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centruje zawartość w pionie */
+}
+
+/* --- NAGŁÓWEK "Łodzie" --- */
+.section-title-bar {
+  width: 100%;
+  max-width: 800px;
+  background-color: rgb(11, 35, 58); /* Ciemny granat */
+  color: white;
+  padding: 15px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.section-title-bar h2 {
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* --- WYSZUKIWARKA --- */
+.search-section {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+
+.search-section label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-input-wrapper input {
+  width: 100%;
+  padding: 10px 10px 10px 40px; /* Miejsce na lupę */
+  border: 1px solid #7a7a7a;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: orange;
+  font-size: 1.2rem;
+}
+
+/* --- KARTA ŁODZI (NOWY WYGLĄD) --- */
+.boats-list {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.boat-card-container {
+  display: flex;
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Lewa strona (Granatowa) */
+.card-left {
+  flex: 4; /* Proporcja szerokości */
+  background-color: rgb(11, 35, 58);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.card-left h3 {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 400;
+}
+.boat-type-small {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: 5px;
+}
+
+/* Prawa strona (Żółta) */
+.card-right {
+  flex: 6; /* Proporcja szerokości */
+  background-color: #ffc107; /* Żółty */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card-main-action {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reserve-btn {
+  background-color: rgb(11, 35, 58);
+  color: white;
+  border: 1px solid white;
+  padding: 10px 30px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.reserve-btn:hover {
+  background-color: #0d2a46;
+}
+
+/* Pasek "Szczegóły" na dole */
+.card-details-strip {
+  background-color: #ff9800; /* Pomarańczowy */
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}
+
+.card-details-strip:hover {
+  background-color: #e68900;
+}
+
+/* --- PAGINACJA --- */
+.pagination {
+  margin-top: 40px;
+  display: flex;
+  gap: 15px;
+}
+
+.page-btn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background-color: #e68900; /* Ciemniejszy dla aktywnego */
+  font-weight: bold;
+}

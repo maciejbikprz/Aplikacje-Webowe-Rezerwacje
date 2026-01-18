@@ -54,7 +54,10 @@ INSERT INTO boats (name, type, description, capacity, pricePerDay, length, statu
 ) VALUES
 ('Sea Breeze', 'Sailboat', 'A comfortable sailboat for coastal cruising.', 6, 150.00, 30.5, 'available'),
 ('Wave Rider', 'Motorboat', 'A fast motorboat perfect for day trips.', 4, 200.00, 25.0, 'available'),
-('Ocean Explorer', 'Yacht', 'A luxurious yacht for extended voyages.', 10, 500.00, 50.0, 'available');
+('Ocean Explorer', 'Yacht', 'A luxurious yacht for extended voyages.', 10, 500.00, 50.0, 'available'),
+('River Runner', 'Kayak', 'A lightweight kayak for river adventures.', 2, 50.00, 12.0, 'available'),
+('Fishing Pro', 'Fishing Boat', 'A boat equipped for fishing trips.', 5, 120.00, 20.0, 'available'),
+('Sun Chaser', 'Catamaran', 'A stable catamaran for group outings.', 8, 300.00, 35.0, 'available');
 -- Tworzenie przykładowych rezerwacji
 INSERT INTO reservations (user_id, boat_id, startDate, endDate, totalPrice,
     status) VALUES
