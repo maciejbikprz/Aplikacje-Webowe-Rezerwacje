@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
-import { boatsAPI } from '../services/api'
+import { boatsAPI, reservationsAPI } from '../services/api'
 
 export default function AdminPanel() {
   const [boats, setBoats] = useState([])
+  const [reservations, setReservations] = useState([])
+  const [activeTab, setActiveTab] = useState('boats')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [showBoatForm, setShowBoatForm] = useState(false)
@@ -17,16 +19,32 @@ export default function AdminPanel() {
     status: 'available'
   })
 
-  // Pobieramy łodzie tylko raz przy załadowaniu komponentu
   useEffect(() => {
-    fetchBoats()
-  }, [])
+    if (activeTab === 'boats') {
+      fetchBoats()
+    } else {
+      fetchReservations()
+    }
+  }, [activeTab])
 
   const fetchBoats = async () => {
     try {
       setLoading(true)
       const data = await boatsAPI.getAll()
       setBoats(data)
+      setError('')
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchReservations = async () => {
+    try {
+      setLoading(true)
+      const data = await reservationsAPI.getAll()
+      setReservations(data)
       setError('')
     } catch (err) {
       setError(err.message)
@@ -122,11 +140,27 @@ export default function AdminPanel() {
   return (
     <div className="admin-panel">
       <div className="admin-container">
-        <h1>Admin Panel - Boats</h1>
+        <h1>Admin Panel</h1>
+
+        <div className="admin-tabs">
+          <button 
+            className={`tab-btn ${activeTab === 'boats' ? 'active' : ''}`}
+            onClick={() => setActiveTab('boats')}
+          >
+            Manage Boats
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'reservations' ? 'active' : ''}`}
+            onClick={() => setActiveTab('reservations')}
+          >
+            View Reservations
+          </button>
+        </div>
 
         {error && <div className="error-message">{error}</div>}
 
-        <div className="content-wrapper">
+        {activeTab === 'boats' && (
+          <div className="tab-content">
             <div className="section-header">
               <h2>Boats Management</h2>
               <button 
@@ -280,7 +314,53 @@ export default function AdminPanel() {
                 </table>
               </div>
             )}
-        </div>
+          </div>
+        )}
+
+        {activeTab === 'reservations' && (
+          <div className="tab-content">
+            <h2>All Reservations</h2>
+
+            {loading && <div className="loading">Loading reservations...</div>}
+
+            {!loading && reservations.length === 0 && (
+              <div className="no-data">No reservations found</div>
+            )}
+
+            {!loading && reservations.length > 0 && (
+              <div className="reservations-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Boat</th>
+                      <th>User</th>
+                      <th>Check-in</th>
+                      <th>Check-out</th>
+                      <th>Total Price</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reservations.map(res => (
+                      <tr key={res.id}>
+                        <td>{res.boat?.name || 'N/A'}</td>
+                        <td>{res.user?.firstName} {res.user?.lastName}</td>
+                        <td>{new Date(res.startDate).toLocaleDateString()}</td>
+                        <td>{new Date(res.endDate).toLocaleDateString()}</td>
+                        <td>${res.totalPrice}</td>
+                        <td>
+                          <span className={`status-badge ${res.status || 'pending'}`}>
+                            {res.status || 'Pending'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
