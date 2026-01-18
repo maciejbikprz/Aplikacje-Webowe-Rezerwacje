@@ -3,32 +3,133 @@ import { useNavigate, Link } from 'react-router-dom'
 import { authAPI } from '../services/api'
 
 export default function Register() {
-  const [d, sD] = useState({}) // "d" jak data
-  const nav = useNavigate()
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const sub = async (e) => {
-    e.preventDefault()
-    // Zero sprawdzania czy hasła są takie same, od razu strzał
-    try {
-      await authAPI.register(d.firstName, d.lastName, d.email, d.password)
-      nav('/login')
-    } catch (e) { alert(e.message) } // Błąd prosto na twarz userowi
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
   }
 
-  // Inline handler
-  const ch = e => sD({...d, [e.target.name]: e.target.value})
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters')
+      return
+    }
+
+    try {
+      setLoading(true)
+      await authAPI.register(
+        formData.firstName,
+        formData.lastName,
+        formData.email,
+        formData.password
+      )
+      navigate('/login')
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <form onSubmit={sub} style={{ padding: 20 }}>
-      <h3 className='main-homepage-header'>Register</h3>
-      <input name="firstName" placeholder="Imię" onChange={ch} required /><br/><br/>
-      <input name="lastName" placeholder="Nazwisko" onChange={ch} required /><br/><br/>
-      <input name="email" type="email" placeholder="Email" onChange={ch} required /><br/><br/>
-      <input name="password" type="password" placeholder="Hasło" onChange={ch} required /><br/><br/>
-      {/* Usunąłem confirmPassword bo API tego nie przyjmuje, a to wersja minimum */}
-      <button>Zarejestruj się</button>
-      <hr/>
-      <Link to="/login">Login</Link>
-    </form>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Create sailReservations Account</h2>
+        
+        {error && <div className="error-message">{error}</div>}
+        
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-row">
+            <div className="form-group">
+              <label>First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="Enter first name"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Enter last name"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter password"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm password"
+              required
+            />
+          </div>
+
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Creating Account...' : 'Register'}
+          </button>
+        </form>
+
+        <p className="auth-link">
+          Already have an account? <Link to="/login">Login here</Link>
+        </p>
+      </div>
+    </div>
   )
 }

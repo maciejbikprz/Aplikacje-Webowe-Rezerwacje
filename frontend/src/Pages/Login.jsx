@@ -3,37 +3,78 @@ import { useNavigate, Link } from 'react-router-dom'
 import { authAPI } from '../services/api'
 
 export default function Login({ setIsAuthenticated, setUserRole }) {
-  const [d, sD] = useState({}) // d jak data
-  const nav = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const sub = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('')
+    
+    if (!email || !password) {
+      setError('Please fill in all fields')
+      return
+    }
+
     try {
-      const res = await authAPI.login(d.email, d.password)
+      setLoading(true)
+      const data = await authAPI.login(email, password)
       
-      // Wrzucamy wszystko "na żywca" do storage
-      localStorage.setItem('token', res.token)
-      localStorage.setItem('userRole', res.user.role)
-      localStorage.setItem('userId', res.user.id)
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('userRole', data.user.role)
+      localStorage.setItem('userId', data.user.id)
       
-      // Aktualizujemy App.js
       setIsAuthenticated(true)
-      setUserRole(res.user.role)
-      
-      nav('/')
-    } catch (e) { alert(e.message) }
+      setUserRole(data.user.role)
+      navigate('/')
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const ch = e => sD({...d, [e.target.name]: e.target.value})
-
   return (
-    <form onSubmit={sub} style={{ padding: 20 }}>
-      <h3 className='main-homepage-header'>Login</h3>
-      <input name="email" type="email" placeholder="Email" onChange={ch} required /><br/><br/>
-      <input name="password" type="password" placeholder="Hasło" onChange={ch} required /><br/><br/>
-      <button>Zaloguj</button>
-      <hr/>
-      <Link to="/register">Rejestracja</Link>
-    </form>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Login to sailReservations</h2>
+        
+        {error && <div className="error-message">{error}</div>}
+        
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+
+        <p className="auth-link">
+          Don't have an account? <Link to="/register">Register here</Link>
+        </p>
+      </div>
+    </div>
   )
 }
