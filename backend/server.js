@@ -1,4 +1,5 @@
 const authRoutes = require('./src/routes/authRoutes');
+const boatRoutes = require("./src/routes/boatRoutes")
 const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
@@ -11,6 +12,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: false }));
+
+
+app.use('/api/boats', boatRoutes);
 
 app.get('/test', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' });
