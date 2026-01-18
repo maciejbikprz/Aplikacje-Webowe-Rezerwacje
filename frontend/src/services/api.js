@@ -1,24 +1,27 @@
-// Konfiguracja adresu API
+// services/api.js
+
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
-if (import.meta.env.DEV) {
-  console.log('API_URL:', API_URL);
-}
+// --- 1. TO JEST FUNKCJA, KTÓREJ BRAKOWAŁO ---
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` })
+  };
+};
 
-// Helper do obsługi odpowiedzi i błędów
 const parseResponse = async (response) => {
   const contentType = response.headers.get('content-type');
-  
   if (contentType && contentType.includes('application/json')) {
-    const data = await response.json();
-    return data;
+    return await response.json();
   } else {
     const text = await response.text();
     throw new Error(`Server error: ${response.status} ${response.statusText}`);
   }
 };
 
-// Obiekt API Autentykacji
+// --- API AUTENTYKACJI ---
 export const authAPI = {
   login: async (email, password) => {
     try {
@@ -28,13 +31,10 @@ export const authAPI = {
         body: JSON.stringify({ email, password })
       });
       const data = await parseResponse(response);
-      if (!response.ok) {
-        throw new Error(data.message || data.error || 'Login failed');
-      }
+      if (!response.ok) throw new Error(data.message || 'Login failed');
       return data;
     } catch (error) {
-      if (error.message.includes('Server error')) throw error;
-      throw new Error(error.message || 'Network error. Please check if the server is running.');
+      throw error;
     }
   },
 
@@ -46,13 +46,50 @@ export const authAPI = {
         body: JSON.stringify({ firstName, lastName, email, password })
       });
       const data = await parseResponse(response);
-      if (!response.ok) {
-        throw new Error(data.message || data.error || 'Registration failed');
-      }
+      if (!response.ok) throw new Error(data.message || 'Registration failed');
       return data;
     } catch (error) {
-      if (error.message.includes('Server error')) throw error;
-      throw new Error(error.message || 'Network error. Please check if the server is running.');
+      throw error;
     }
+  }
+};
+
+// --- API ŁODZI (WYMAGANE PRZEZ ADMIN PANEL) ---
+export const boatsAPI = {
+  getAll: async () => {
+    const response = await fetch(`${API_URL}/boats`);
+    return await parseResponse(response);
+  },
+
+  create: async (boatData) => {
+    const response = await fetch(`${API_URL}/boats`, {
+      method: 'POST',
+      headers: getAuthHeaders(), // Tutaj używamy brakującej funkcji
+      body: JSON.stringify(boatData)
+    });
+    const data = await parseResponse(response);
+    if (!response.ok) throw new Error(data.message || 'Failed to create boat');
+    return data;
+  },
+
+  update: async (id, boatData) => {
+    const response = await fetch(`${API_URL}/boats/${id}`, {
+      method: 'PUT',
+      headers: getAuthHeaders(), // Tutaj też
+      body: JSON.stringify(boatData)
+    });
+    const data = await parseResponse(response);
+    if (!response.ok) throw new Error(data.message || 'Failed to update boat');
+    return data;
+  },
+
+  delete: async (id) => {
+    const response = await fetch(`${API_URL}/boats/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders() // I tutaj
+    });
+    const data = await parseResponse(response);
+    if (!response.ok) throw new Error(data.message || 'Failed to delete boat');
+    return data;
   }
 };

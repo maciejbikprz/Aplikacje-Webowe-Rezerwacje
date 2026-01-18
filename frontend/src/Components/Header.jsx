@@ -19,7 +19,10 @@ function Header({ isAuthenticated, userRole, onLogout }) {
                 <nav className="document-navigation">
                     <Link to="/" className="document-navigation__link">Strona główna</Link>
                     {isAdmin && (
+                        <>
                         <Link to="/ExampleAdd" className="document-navigation__link">Example Add</Link>
+                        <Link to="/adminPanel" className="document-navigation__link">Admin Panel</Link>
+                        </>
                     )}
                     {isAuthenticated ? (
                         <a onClick={onLogout} className="document-navigation__link">

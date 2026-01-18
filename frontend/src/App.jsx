@@ -5,6 +5,7 @@ import ExampleAdd from './Pages/ExampleAdd';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
 import Header from './Components/Header'; // Pamiętaj o imporcie!
+import AdminPanel from './Pages/AdminPanel';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -54,6 +55,9 @@ function App() {
       
       <Route path="/register" element={<Register/>}/> 
       <Route path="/ExampleAdd" element={<ExampleAdd/>}/>
+      <Route path="/AdminPanel" element={<AdminPanel 
+            setIsAuthenticated={setIsAuthenticated} 
+            setUserRole={setUserRole} />}></Route>
     </Routes>
   </>)
 }
