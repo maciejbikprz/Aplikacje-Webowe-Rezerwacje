@@ -2,7 +2,7 @@ services:
   mysql_db:
     image: mysql:8.0
     container_name: mysql_container
-    restart: alsways
+    restart: always
     environment:
       MYSQL_DATABASE: 'mydatabase'
       MYSQL_USER: 'user'

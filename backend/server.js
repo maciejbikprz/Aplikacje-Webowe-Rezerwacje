@@ -1,6 +1,8 @@
 const authRoutes = require('./src/routes/authRoutes');
 const express = require('express');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
 require('dotenv').config();
 
 const app = express()
@@ -8,6 +10,7 @@ const app = express()
 app.use(cors());
 app.use(express.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: false }));
 
 app.get('/test', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' });
