@@ -54,7 +54,7 @@ function App() {
       />
       
       <Route path="/register" element={<Register/>}/> 
-      <Route path="/ExampleAdd" element={<ExampleAdd/>}/>
+      {/* <Route path="/ExampleAdd" element={<ExampleAdd/>}/> */}
       <Route path="/AdminPanel" element={<AdminPanel 
             setIsAuthenticated={setIsAuthenticated} 
             setUserRole={setUserRole} />}></Route>
