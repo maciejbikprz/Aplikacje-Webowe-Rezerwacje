@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReservationModal from './ReservationModal'
+import { Link } from 'react-router-dom';
 
 export default function BoatCard({ boat, isAuthenticated }) {
   const [showModal, setShowModal] = useState(false)
@@ -26,22 +27,23 @@ export default function BoatCard({ boat, isAuthenticated }) {
         {/* Prawa sekcja - Akcje */}
         <div className="card-right">
           <div className="card-main-action">
-            <button 
+            <button
               className="reserve-btn"
               onClick={handleReserve}
             >
               Zarezerwuj
             </button>
           </div>
-          <div className="card-details-strip">
-            Szczegóły
-          </div>
+          <Link to={`/boats/${boat.id}`} className='card-details-strip__link'>
+            <div className="card-details-strip">Szczegóły
+
+            </div></Link>
         </div>
       </div>
 
       {showModal && (
-        <ReservationModal 
-          boat={boat} 
+        <ReservationModal
+          boat={boat}
           onClose={() => setShowModal(false)}
           onSuccess={() => {
             setShowModal(false)

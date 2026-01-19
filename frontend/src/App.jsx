@@ -6,6 +6,7 @@ import Login from './Pages/Login';
 import Header from './Components/Header';
 import AdminPanel from './Pages/AdminPanel';
 import Boats from './Pages/Boats';
+import Boat from './Pages/Boat';
 import Dashboard from './Pages/Dashboard';
 import ProtectedRoute from './Components/ProtectedRoute';
 
@@ -46,6 +47,7 @@ function App() {
           path="/boats" 
           element={<Boats isAuthenticated={isAuthenticated} />}
       />
+      <Route path="/boats/:id" element={<Boat isAuthenticated={isAuthenticated}/>} />
       
       <Route 
         path="/dashboard" 

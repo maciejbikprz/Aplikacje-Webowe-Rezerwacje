@@ -908,3 +908,99 @@ body {
     margin: 2px !important;
   }
 }
+.card-details-strip__link{
+  color: white;
+  text-decoration: none;
+}
+
+/* Boat.css */
+
+/* Kontener główny - dopasowany do layoutu z sidebar'em */
+/* Centrujemy kartę na dostępnej przestrzeni */
+.boat-details-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Sama karta szczegółów */
+.boat-details {
+  width: 100%;
+  max-width: 600px; /* Nieco szersza niż wcześniej */
+  background-color: #ffc107; /* Ten sam żółty co w reszcie apki */
+  border-radius: 10px; /* Zaokrąglenie jak w boat-card-container */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: 'Lato', sans-serif;
+  padding-bottom: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Nagłówek (Nazwa łodzi) */
+.boat-details h1 {
+  background-color: rgb(11, 35, 58); /* Główny granat aplikacji */
+  color: white;
+  margin: 0 0 25px 0;
+  padding: 30px 20px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 400; /* Lżejsza czcionka, pasująca do nagłówków */
+  letter-spacing: 1px;
+}
+
+/* Białe kafelki z informacjami */
+.boat-details p {
+  background-color: #ffffff;
+  margin: 12px 25px;
+  padding: 15px 20px;
+  border-radius: 5px; /* Takie samo zaokrąglenie jak inputy w formularzach */
+  color: rgb(18, 30, 48); /* Ciemny tekst */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  font-size: 1.1rem;
+}
+
+/* Etykiety (Typ, Pojemność...) */
+.boat-details p strong {
+  color: #666; /* Szary, mniej kontrastowy dla etykiet */
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Sekcja przycisku */
+.boat-action-area {
+  padding: 20px 25px 10px;
+}
+
+/* Przycisk - styl identyczny jak .btn-confirm z Twojego CSS */
+.boat-details button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: rgb(11, 35, 58); /* Granat */
+  color: white;
+  border: none;
+  border-radius: 15px; /* Duże zaokrąglenie jak w rezerwacji */
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.boat-details button:hover {
+  background-color: #002347; /* Ciemniejszy granat */
+  transform: translateY(-2px);
+}
+
+/* Animacja wejścia */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

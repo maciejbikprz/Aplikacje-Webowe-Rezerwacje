@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { reservationsAPI } from '../services/api'
-
+import { Link } from 'react-router-dom'
 export default function Dashboard() {
   const [reservations, setReservations] = useState([])
   const [loading, setLoading] = useState(true)
@@ -121,15 +121,15 @@ export default function Dashboard() {
                     </div>
                     
                     <div className="res-stats-row">
-                      <span>⏳ {duration} dni</span>
-                      <span>💰 ${reservation.totalPrice}</span>
+                      <span>{duration} dni</span>
+                      <span>PLN {reservation.totalPrice}</span>
                     </div>
                   </div>
-
+                  <Link to={`/boats/${reservation.boatId}`} className='card-details-strip__link'>
                   <button className="res-details-btn">
                     Szczegóły łodzi
                   </button>
-
+                  </Link>
                   {/* ZMIANA: Przycisk anulowania dostępny dla pending i confirmed */}
                   {canCancel && (
                     <button 
