@@ -29,11 +29,9 @@ export default function Dashboard() {
     if (!window.confirm('Czy na pewno chcesz anulować tę rezerwację?')) return
 
     try {
-      await reservationsAPI.update(reservationId, { status: 'cancelled' })
+      await reservationsAPI.delete(reservationId)
 
-      setReservations(prev => prev.map(r => 
-        r.id === reservationId ? { ...r, status: 'cancelled' } : r
-      ))
+      setReservations(prev => prev.filter(r => r.id !== reservationId))
     } catch (err) {
       alert(err.message)
     }
